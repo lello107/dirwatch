@@ -1,6 +1,50 @@
 # Dirwatch
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/dirwatch`. To experiment with that code, run `bin/console` for an interactive prompt.
+ Author::      Gavin Kistner (mailto:!@phrogz.net)
+ Copyright::   Copyright (c)2004 Gavin Kistner
+ License::     See http://Phrogz.net/JS/_ReuseLicense.txt for details
+ Version::     0.9.6, 2004-Oct-11
+ Full Code::   link:../DirectoryWatcher.rb
+
+ The DirectoryWatcher class keeps an eye on all files in a directory, and calls
+ methods of your making when files are added to, modified in, and/or removed from
+ that directory.
+
+ The +on_add+, +on_modify+ and +on_remove+ callbacks should be Proc instances
+ that should be called when a file is added to, modified in, or removed from 
+ the watched directory.
+
+ The +on_add+ and +on_modify+ Procs will be passed a File instance pointing to
+ the file added/changed, as well as a Hash instance. The hash contains some
+ saved statistics about the file (modification date (<tt>:date</tt>),
+ file size (<tt>:size</tt>), and original path (<tt>:path</tt>)) and may also
+ be used to store additional information about the file.
+
+ The +on_remove+ Proc will only be passed the hash that was passed to +on_add+
+ and +on_modify+ (since the file no longer exists in a way that the watcher
+ knows about it). By storing your own information in the hash, you may do
+ something intelligent when the file disappears.
+
+ The first time the directory is scanned, the +on_add+ callback will be invoked
+ for each file in the directory (since it's the first time they've been seen).
+
+ Use the +onmodify_checks+ and +onmodify_requiresall+ properties to control
+ what is required for the +on_modify+ callback to occur.
+
+ If you do not set a Proc for any one of these callbacks; they'll simply
+ be ignored.
+
+ Use the +autoscan_delay+ property to set how frequently the directory is
+ automatically checked, or use the #scan_now method to force it to look
+ for changes.
+
+ <b>You must call the #start_watching method after you create a DirectoryWatcher
+ instance</b> (and after you have set the necessary callbacks) <b>to start the
+ automatic scanning.</b>
+
+ The DirectoryWatcher does not process sub-directories of the watched
+ directory. Any item in the directory which returns +false+ for <tt>File.file?</tt>
+ is ignored.
 
 TODO: Delete this and the text above, and describe your gem
 
