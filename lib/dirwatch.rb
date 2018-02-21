@@ -134,6 +134,9 @@ class DirectoryWatcher
    # Defaults to <tt>/^[^.].*$/</tt> (files which do not begin with a period).
    attr_accessor :name_regexp
 
+
+   attr_accessor :known_file_stats
+
    
    # Creates a new directory watcher.
    #
