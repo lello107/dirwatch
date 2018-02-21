@@ -172,12 +172,11 @@ class DirectoryWatcher
    # seconds before calling it again.
    #
    def status_watching
-      @thread = Thread.new{ 
-         while true
-            self.scan_now
-            sleep @autoscan_delay
-         end
-      }
+   	if(@thread)
+      puts @thread.inspect
+  	else
+  		puts "not started"
+  	end
    end
 
 
