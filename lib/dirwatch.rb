@@ -173,9 +173,9 @@ class DirectoryWatcher
    #
    def status_watching
    	if(@thread)
-      puts @thread.inspect
+        return @thread.status
   	else
-  		puts "not started"
+  		return "not started"
   	end
    end
 
