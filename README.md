@@ -22,7 +22,27 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+ Example:
+
+    device_manager = Dirwatch::DirectoryWatcher.new( '/Users/lello107', 2 )
+    device_manager.name_regexp = /^[^.].*\.rb$/
+    
+    device_manager.on_add = Proc.new{ |the_file, stats_hash|
+       puts "Hey, just found #{the_file.inspect}!" 
+    }
+    
+    device_manager.on_modify = Proc.new{ |the_file, stats_hash|
+       puts "Hey, #{the_file.inspect} just changed."
+    }
+    
+    device_manager.on_remove = Proc.new{ |stats_hash|
+       puts "Whoa, the following file just disappeared:"
+       stats_hash.each_pair{ |k,v|
+          puts "#{k} : #{v}"
+       }
+    }
+    
+    device_manager.start_watching
 
 ## Development
 
