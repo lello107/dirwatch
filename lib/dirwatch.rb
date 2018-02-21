@@ -133,6 +133,7 @@ class DirectoryWatcher
    # will be passed to the +on_add+/+on_modify+/+on_remove+ callbacks.
    # Defaults to <tt>/^[^.].*$/</tt> (files which do not begin with a period).
    attr_accessor :name_regexp
+
    
    # Creates a new directory watcher.
    #
@@ -165,6 +166,20 @@ class DirectoryWatcher
          end
       }
    end
+
+   # Get info about scanning of the directory,
+   # repeatedly calling #scan_now and then waiting +autoscan_delay+
+   # seconds before calling it again.
+   #
+   def status_watching
+      @thread = Thread.new{ 
+         while true
+            self.scan_now
+            sleep @autoscan_delay
+         end
+      }
+   end
+
 
    # Stops the automatic scanning of the directory for changes.
    def stop_watching
